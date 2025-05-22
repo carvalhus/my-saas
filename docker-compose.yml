@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: flectra
+      POSTGRES_PASSWORD: flectra
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  flectra:
+    image: flectrahq/flectra:latest
+    ports:
+      - "7073:7073"
+    environment:
+      HOST: db
+      USER: flectra
+      PASSWORD: flectra
+    depends_on:
+      - db
+
+volumes:
+  db_data:
